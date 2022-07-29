@@ -83,6 +83,8 @@ __Update Pos__ – Update the in1 array with an external file
 This command reads the pose saved in the “lastPos.txt”, then update the in array. The internal motor counts are updated accordingly. Please note that this file is updated upon safely exiting the application, and the last pose of the cable robot and internal motor counts are saved.
 An alternative is to use Leica for finding the current position and rotation, update “lastPos.txt” manually and save the file, then finally run this command.
 
+IMPORTANT! Always run this function after starting up the programme, before moving on to the operation stage. This ensures the system has the correct position as intended.
+
 __Adjust Cable__ – Adjust the cable individually
 The button itself will update the display of the internal motor count of the selected motor (#1-8). “+” and “-” increase and decrease the cable length respectively. “Home” is going to the motor counter zero, ie. homing. This can be used to restore the cable robot to home position after crash, motor to motor, as long as the motors' power is never cut off during crash. IMPORTANT! Do not use commands to motor no. above the defined "tekMotorNum" in the "model.json", or else the programme will crash/quit upon failing to send commands to non-existing motors.
 
