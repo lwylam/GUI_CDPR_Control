@@ -113,4 +113,4 @@ Upon coming to this point of the programme, the log file is closed with the time
 
 ![Shut Down Preparation](https://github.com/lwylam/GUI_CDPR_Control/blob/main/images/stage3.png)
 
-_Last updated on 17/05/2022_
+_Last updated on 29/07/2022_
