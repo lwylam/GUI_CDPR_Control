@@ -2,13 +2,14 @@
 A simple GUI for CDPR robots built with up to 8 Teknic motors.
 
 ## Preparation
-The 5 files listed below are all the minimal needed files to run a cable robot with this graphical user interface (GUI). Always keep these files in the same folder. Upon successful run of the programme, a new folder named **Data Log** will be created and simple log files are saved within automatically.
+The 6 files listed below are all the minimal needed files to run a cable robot with this graphical user interface (GUI). Always keep these files in the same folder. Upon successful run of the programme, a new folder named **Data Log** will be created and simple log files are saved within automatically.
 
 - CDPR-GUI.exe
 - lastPos.txt
 - model.json
 - sFoundation20.dll
 - traj.csv
+- extern.csv
 
 Please feel free to download this repository as a package to run the programme.
 
@@ -28,6 +29,7 @@ The GUI for general purposes cable robot consists of 4 major components.
 The programme operation follows the sequence below.
 
 ## Read model and Search network
+
 Before starting the **CDPR-GUI.exe**, please make sure the parameters saved in "model.json" is correct. Any changes in this json file after starting the programme will not be effective. Below is an example of the json file. For details of the "model.json", plese refer to [Define model.json](https://github.com/lwylam/GUI_CDPR_Control/wiki/Define-model.json#element-explanation).
 
 ```
@@ -74,18 +76,22 @@ When it is determined that the system is ready for the next section of operation
 ![Initialization](https://github.com/lwylam/GUI_CDPR_Control/blob/main/images/stage1.png)
 
 __Torque__ – Tighten cables with Torque mode
+
 All motors run independently until the defined percentage of the full torque (-2.5% in the example) is reached. This tightens the cable robot. Repeat this command multiple times to achieve the desired stiffness of end-effector of the cable robot. The check box on the side allow the motors to turn in opposite directions to loosen the cables at +1% of the full torque.
 
 __Set as Home__ – Set the current pose as pre-defined home
+
 The defined home pose can be seen to the right of the “Set as Home” button. This command sets all 8 internal motor counts to zero, and copy the home array into the in array, which stores the current position / pose of the cable robot.
 
 __Update Pos__ – Update the in1 array with an external file
+
 This command reads the pose saved in the “lastPos.txt”, then update the in array. The internal motor counts are updated accordingly. Please note that this file is updated upon safely exiting the application, and the last pose of the cable robot and internal motor counts are saved.
 An alternative is to use Leica for finding the current position and rotation, update “lastPos.txt” manually and save the file, then finally run this command.
 
 IMPORTANT! Always run this function after starting up the programme, before moving on to the operation stage. This ensures the system has the correct position as intended.
 
 __Adjust Cable__ – Adjust the cable individually
+
 The button itself will update the display of the internal motor count of the selected motor (#1-8). “+” and “-” increase and decrease the cable length respectively. “Home” is going to the motor counter zero, ie. homing. This can be used to restore the cable robot to home position after crash, motor to motor, as long as the motors' power is never cut off during crash. IMPORTANT! Do not use commands to motor no. above the defined "tekMotorNum" in the "model.json", or else the programme will crash/quit upon failing to send commands to non-existing motors.
 
 If any commands or functions from this section is needed afterwards, please safely quit the programme and restart it. Upon clicking on the "Next" button, the application moves on to the operation section.
@@ -93,17 +99,22 @@ If any commands or functions from this section is needed afterwards, please safe
 ## Operation
 Upon reaching this section of the programme, data logging would start, recording the modes used and the points commanded. Saved files can be found in the "Data Log" folder.
 
-![Trajectory](https://github.com/lwylam/GUI_CDPR_Control/blob/main/images/stage2t.png)
+![Trajectory](https://github.com/lwylam/GUI_CDPR_Control/blob/main/images/stage2ext.png)
 
 __Trajectory__ – Read from \"traj.csv\" file for pre-set trajectory
+
 Define the trajectory in the form of 6 DoF pose and time in ms a line (eg. 2.197, -3.599, 0.744, 0, 0, 0, 350). Save the file before running this command.
 
 IMPORTANT! Trajectory stop and pause buttons are on the right side of the application. Use them as applicable.
 
-__Parameter__ – Parameterized trajectory
-This function has been disabled in this GUI version. Please ignore.
+__External__ – External point step trajectory, read from \"extern.csv\" file
+
+Define the trajectory in the form of 6 DoF pose for every system defined time step (ie. 35 ms) a line (eg. 2.197, -3.599, 0.744, 0, 0, 0). Save the file before running this command.
+
+IMPORTANT! Trajectory stop and pause buttons are on the right side of the application. Use them as applicable.
 
 __Manual__ - Manual control using the arrow buttons on the application
+
 The direction of motions assume the user faces towards the positive y direction of the cable robot, meaning positive x would be to the right. Note that the diagonal rise and fall has a pre-defined 55° movement. "home" button can be used to home the robot with trajectory planning. The white textbox below the arrows can be used to change the step size of the manual control.
 
 After all the desired operations, it is recommended to home the robot in the manual control, because the internal counts will be lost when power is cut off. Then, click "Next" to move on to the next section of the programme, which is to prepare for shut down.
@@ -113,4 +124,4 @@ Upon coming to this point of the programme, the log file is closed with the time
 
 ![Shut Down Preparation](https://github.com/lwylam/GUI_CDPR_Control/blob/main/images/stage3.png)
 
-_Last updated on 29/07/2022_
+_Last updated on 11/02/2023_
